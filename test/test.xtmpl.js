@@ -1,6 +1,6 @@
 /**
  * @file xtmpl 模板引擎单元测试文件
- * @author Liao Binbin(liaobinbin01@baidu.com)
+ * @author lbbsteel@gmail.com
  */
 (function(xtmpl) {
     module = QUnit.module;

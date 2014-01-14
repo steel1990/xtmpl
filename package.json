@@ -1,8 +1,8 @@
 {
     "name": "xtmpl",
-    "version": "0.0.2",
+    "version": "0.0.3",
     "description": "xtmpl is a js tempalte engine.",
-    "author": "liaobinbin01@baidu.com",
+    "author": "lbbsteel@gmail.com",
     "main": "./bin/xtmpl.min.js",
     "dependencies": {},
     "devDependencies": {
