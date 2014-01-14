@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>tmpl test</title>
+    <style>
+        .red {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div id="wrapper"></div>
+    
+    <script id="tmpl1" type="text/tmpl">
+        <h1>{{tit}}</h1>
+        <ul>
+        {{#each list}}
+            <li>
+            {{#each name}}
+                {{this}}<sup>{{key}}</sup><sub>{{this.length}}</sub>
+            {{/each}}
+            {{#with name}}
+                {{f}}.{{l}}
+            {{/with}}
+            {{pname name}}
+            <span class="{{#if !count}}red{{/if}}">{{ac count}}</span>{{../../unit}}
+            </li>
+        {{/each}}
+        </ul>
+    </script>
+    <script src="../bin/xtmpl.min.js"></script>
+    <script>
+        var $ = function(id){
+            return document.getElementById(id);
+        };
+
+        xtmpl.registerHelper('ac', function(num, accuracy) {
+            accuracy = parseInt(accuracy) || 2;
+            accuracy = Math.pow(10, accuracy);
+            return Math.round(num * accuracy) / accuracy;
+        });
+
+        xtmpl.registerHelper('pname', function(name) {
+            return name.f + '.' + name.l;
+        });
+
+        xtmpl.config('escapeHtml', false);
+
+        var fn = xtmpl.compile($('tmpl1').innerHTML);
+        $('wrapper').innerHTML = fn({
+            tit: 'Name List',
+            unit: '$',
+            list: [{
+                name: {
+                    f: 'Steel',
+                    l: 'Liao'
+                },
+                fname: 'Steel',
+                lname: 'Liao',
+                count: 10.532342,
+            }, {
+                name: {
+                    f: 'Mallard',
+                    l: 'Liao'
+                },
+                fname: 'Mallard',
+                lname: 'Liao',
+                count: 0
+            }]
+        });
+    </script>
+</body>
+</html>
