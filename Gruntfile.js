@@ -1,6 +1,6 @@
 /**
  * @file grunt 自动任务配置文件
- * @author liaobinbin01@baidu.com
+ * @author lbbsteel@gmail.com
  */
 
 module.exports = function(grunt) {
