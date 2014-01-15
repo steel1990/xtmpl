@@ -6,8 +6,16 @@
 module.exports = function(grunt) {
     grunt.initConfig({
         watch: {
-            files: ['bin/xtmpl.js', 'Gruntfile.js', 'test/test.xtmpl.js'],
-            tasks: ['build']
+            xtmpl: {
+                files: ['bin/xtmpl.js', 'Gruntfile.js', 'test/test.xtmpl.js'],
+                tasks: ['build']
+            },
+            html: {
+                files: ['bin/xtmpl.min.js', 'demo/tmpl.html', 'demo/stress-test.html'],
+                options: {
+                    livereload: true
+                }
+            }
         },
         jshint: {
             options: {
@@ -48,6 +56,9 @@ module.exports = function(grunt) {
             }
         },
         uglify: {
+            options: {
+                beautify: false
+            },
             xtmpl: {
                 files: {
                     'bin/xtmpl.min.js': 'bin/xtmpl.js'
