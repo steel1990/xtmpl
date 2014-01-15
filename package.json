@@ -2,10 +2,16 @@
     "name": "xtmpl",
     "version": "0.0.3",
     "description": "xtmpl is a js tempalte engine.",
+    "homepage": "https://github.com/steel1990/xtmpl",
     "author": "lbbsteel@gmail.com",
     "main": "./bin/xtmpl.min.js",
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/steel1990/xtmpl.git"
+    },
     "dependencies": {},
     "devDependencies": {
+        "grunt-cli": "*",
         "grunt": ">0.4.1",
         "grunt-contrib-watch": ">0.3.1",
         "grunt-contrib-jshint": ">0.3.0",
