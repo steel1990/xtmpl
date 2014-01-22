@@ -19,7 +19,9 @@
 <script src="http://aui.github.io/artTemplate/test/js/jquery.tmpl.js"></script>
 <script src="http://aui.github.io/artTemplate/test/js/easytemplate.js"></script>
 <script src="http://aui.github.io/artTemplate/test/js/underscore.js"></script>
-<script src="../bin/xtmpl.min.js"></script>
+<script src="../src/xtmpl.min.js"></script>
+<script src="http://ecomfe.github.io/etpl/etpl.js"></script>
+
 
 
 <script>
@@ -47,7 +49,8 @@ for (var i = 0; i < length; i ++) {
 var testList = [{
         name: 'xtmpl',
         tester: function() {
-            var source = document.getElementById('mytmpl').innerHTML;
+            xtmpl.config('escapeHtml', false);
+            var source = document.getElementById('xtmpl').innerHTML;
             var fn = xtmpl.compile(source);
             for (var i = 0; i < number; i ++) {
                 fn(data);
@@ -70,11 +73,12 @@ var testList = [{
     {
         name: 'juicer',
         tester: function () {
-            var config = {cache:true};
+            var config = {cache:false};
 
             var source = document.getElementById('juicer').innerHTML;
+            var fn = juicer.compile(source, config);
             for (var i = 0; i < number; i ++) {
-                juicer.to_html(source, data, config);
+                fn.render(data);
             }
         }
     },
@@ -139,9 +143,10 @@ var testList = [{
         name: 'baiduTemplate',
         tester: function () {
             var bt=baidu.template;
-            bt.ESCAPE = false;
+            bt.ESCAPE = true;
+            fn = bt('baidu-template');
             for (var i = 0; i < number; i ++) {
-                bt('baidu-template', data);
+                fn(data);
             }
         }
     },
@@ -163,6 +168,16 @@ var testList = [{
             var source = document.getElementById('Mustache').innerHTML;
             for (var i = 0; i < number; i ++) {
                 Mustache.to_html(source, data);
+            }
+        }
+    },
+    {
+        name: 'etpl',
+        tester: function() {
+            var source = document.getElementById('etpl').innerHTML;
+            var render = etpl.compile(source);
+            for (var i = 0; i < number; i ++) {
+                render(data);
             }
         }
     }
@@ -385,7 +400,7 @@ var startTest = function () {
 <script id="Handlebars" type="text/tmpl">
 <ul>
     {{#list}}
-        <li>{{{index}}}. 用户: {{{user}}}/ 网站：{{{site}}}</li>
+        <li>{{index}}. 用户: {{user}}/ 网站：{{site}}</li>
     {{/list}}
 </ul>
 </script>
@@ -418,11 +433,18 @@ var startTest = function () {
     <% } %>
 </ul>
 </script>
-<script id="mytmpl" type="text/tmpl">
+<script id="xtmpl" type="text/tmpl">
 <ul>
-    {{#each}}
-        <li>{{index}}. 用户: {{user}}/ 网站：{{site}}</li>
-    {{/each}}
+    {{#for list}}
+        <li>{{$key}}. 用户: {{user}}/ 网站：{{site}}</li>
+    {{/for}}
+</ul>
+</script>
+<script id="etpl" type="text/tmpl">
+<ul>
+<!-- for: ${list} as ${item}, ${i} -->
+    <li>${i}. 用户: ${item.user}/ 网站：${item.site}</li>
+<!-- /for -->
 </ul>
 </script>
 </head>

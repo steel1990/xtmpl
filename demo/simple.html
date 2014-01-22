@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>tmpl test</title>
+    <style>
+        .red {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div id="wrapper"></div>
+    
+    <script id="tmpl1" type="text/tmpl">
+        <h1>{{=tit}}</h1>
+        <p>
+        {{#if a}}
+            {{ac a 11 "xxx" b tit "tit" []}}
+            {{#if !b}}
+                {{b}}
+            {{/if}}
+        {{/if}}
+        </p>
+        <ul>
+            <li>
+            {{#with name}}
+                {{f}}.{{l}}::{{/a}}{{../unit}}
+            {{/with}}
+            </li>
+
+            {{#each list}}
+                <li>{{$key}}:{{$value}}</li>
+            {{/each}}
+
+            {{#each obj}}
+                <li>{{$key}}:{{$value}}</li>
+            {{/each}}
+        </ul>
+        {{tit}}
+    </script>
+    <script src="../src/xtmpl.min.js"></script>
+    <script>
+        var $ = function(id){
+            return document.getElementById(id);
+        };
+
+        var data = {
+            tit: '<span>Name List</span>',
+            unit: '$',
+            name: {
+                f: 'Steel',
+                l: 'Liao'
+            },
+            a: 10,
+            b: 1,
+            list: ['xx', 'ab', 'cd'],
+            obj: {
+                a: 'b',
+                c: 'd',
+                e: 'f'
+            }
+        };
+
+        xtmpl.registerInlineHelper('ac', function() {
+            return [].join.call(arguments, ',');
+        });
+        xtmpl.config('escapeHtml', true);
+        var fn = xtmpl.compile($('tmpl1').innerHTML);
+        $('wrapper').innerHTML = fn(data);
+    </script>
+</body>
+</html>

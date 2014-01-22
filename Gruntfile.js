@@ -7,11 +7,11 @@ module.exports = function(grunt) {
     grunt.initConfig({
         watch: {
             xtmpl: {
-                files: ['bin/xtmpl.js', 'Gruntfile.js', 'test/test.xtmpl.js'],
+                files: ['src/xtmpl.js', 'Gruntfile.js', 'test/test.xtmpl.js'],
                 tasks: ['build']
             },
             html: {
-                files: ['bin/xtmpl.min.js', 'demo/tmpl.html', 'demo/stress-test.html'],
+                files: ['src/xtmpl.min.js', 'demo/tmpl.html', 'demo/stress-test.html'],
                 options: {
                     livereload: true
                 }
@@ -34,12 +34,13 @@ module.exports = function(grunt) {
                 maxlen: 100,
                 eqnull: true,
                 browser: true,
+                evil: true,
                 globals: {
                     module: true,
                     define: true
                 }
             },
-            xtmpl: ['bin/xtmpl.js', 'Gruntfile.js'],
+            xtmpl: ['src/xtmpl.js', 'Gruntfile.js'],
             qunit: {
                 options: {
                     globals: {
@@ -61,7 +62,7 @@ module.exports = function(grunt) {
             },
             xtmpl: {
                 files: {
-                    'bin/xtmpl.min.js': 'bin/xtmpl.js'
+                    'src/xtmpl.min.js': 'src/xtmpl.js'
                 }
             }
         },
@@ -71,7 +72,7 @@ module.exports = function(grunt) {
     });
 
     /**
-     * 注册默认任务
+     * 注册默认任务为 watch
      */
     grunt.registerTask('default', ['watch']);
     grunt.registerTask('build', ['jshint', 'uglify', 'qunit']);
