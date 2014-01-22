@@ -1,10 +1,10 @@
 {
     "name": "xtmpl",
-    "version": "0.0.4",
+    "version": "0.0.5",
     "description": "xtmpl is a js tempalte engine.",
     "homepage": "https://github.com/steel1990/xtmpl",
     "author": "lbbsteel@gmail.com",
-    "main": "./bin/xtmpl.min.js",
+    "main": "./src/xtmpl.min.js",
     "repository": {
         "type": "git",
         "url": "git://github.com/steel1990/xtmpl.git"
