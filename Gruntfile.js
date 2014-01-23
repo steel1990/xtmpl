@@ -81,7 +81,7 @@ module.exports = function(grunt) {
      * 注册默认任务为 watch
      */
     grunt.registerTask('default', ['watch']);
-    grunt.registerTask('build', ['jshint', 'uglify', 'qunit']);
+    grunt.registerTask('build', ['jshint', 'jscs', 'uglify', 'qunit']);
 
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-uglify');
