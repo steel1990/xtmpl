@@ -231,7 +231,7 @@
             }
         });
         
-        test('', function () {
+        test('change syntax', function () {
             equal(xtmpl.compile('{@this@}')('<span>'), '<span>');
             equal(xtmpl.compile('if{@%if a@}xxx{@/if@}')({ a: 1 }), 'ifxxx');
             var data = {
@@ -262,7 +262,7 @@
             }
         });
         
-        test('', function () {
+        test('change syntax', function () {
             equal(xtmpl.compile('{@this@}')('<span>'), '<span>');
             equal(xtmpl.compile('if{@%if a@}xxx{@/if@}')({ a: 1 }), 'ifxxx');
             var data = {
