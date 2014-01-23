@@ -29,13 +29,13 @@
             {{/with}}
             </li>
 
-            {{#each list}}
+            {{#for list}}
                 <li>{{$key}}:{{$value}}</li>
-            {{/each}}
+            {{/for}}
 
-            {{#each obj}}
+            {{#forin obj}}
                 <li>{{$key}}:{{$value}}</li>
-            {{/each}}
+            {{/forin}}
         </ul>
         {{tit}}
     </script>

@@ -11,7 +11,7 @@ module.exports = function(grunt) {
                 tasks: ['build']
             },
             html: {
-                files: ['src/xtmpl.min.js', 'demo/tmpl.html', 'demo/stress-test.html'],
+                files: ['src/xtmpl.min.js', 'demo/simple.html'],
                 options: {
                     livereload: true
                 }

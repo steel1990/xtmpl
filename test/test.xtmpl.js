@@ -1,5 +1,5 @@
 /**
- * @file xtmpl 模板引擎单元测试文件
+ * @file xtmpl 模板引擎单元测试
  * @author lbbsteel@gmail.com
  */
 (function (xtmpl) {

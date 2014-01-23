@@ -43,3 +43,14 @@ xtmpl 是一个简单的js模板引擎
             c: 3
         }
     }); // a:1;b:2;c:3;
+
+### 注册行内接口
+    xtmpl.registerInlineHelper('enc', function(str) {
+        return encodeURIComponent(str);
+    });
+    xtmpl.compile('?a={{enc this}}')('?abc'); // ?a=%3Fabc
+    var data = {
+        a: 'p v',
+        b: '&&'
+    };
+    xtmpl.compile('?a={{enc a}}&b={{enc b}}')(data); // ?a=p%20v&b=%26%26
