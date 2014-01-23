@@ -362,7 +362,7 @@
             // 第二次切割后为 ["e", "fg"]
             // 第三次切割后为 ["h", ""]
             var endArr = str.split(_config.endTag);
-            
+
             var data = xtmpl._resolveCode(
                 endArr[0],
                 envStack[envStack.length - 1]
@@ -426,9 +426,9 @@
 (function (xtmpl) {
     /**
      * 注册 helperIf 用于简单的逻辑判断
-     * @param {*} arg 需要判断的参数
-     * @param {Object} options 其他参数，包括内部模板等信息
-     * @return {string} 返回解析后的字符串
+     * @param {string} env 当前的环境变量名
+     * @param {Array.<string>} args 传递的参数列表
+     * @return {Object} 返回 block helper 执行的结果
      */
     xtmpl.registerBlockHelper('if', function helperIf(env, args) {
         var data = {
@@ -438,11 +438,13 @@
         };
         for (var i = 0; i < args.length; i += 1) {
             var arg = args[i];
+            // 是否取反
             var isNegate = false;
             if (arg.indexOf('!') === 0) {
                 arg = arg.slice(1);
                 isNegate = true;
             }
+            // 是否为变量名判断
             if (!/^['"]|^[\d.]$|^\W|true|false/.test(arg)) {
                 data.variable.push(env + '.' + arg);
             }
@@ -456,9 +458,9 @@
 
     /**
      * 注册 helperWith 用于改变当前的作用域
-     * @param {Object} data 需要改变为的作用域对象
-     * @param {Object} options 其他参数，包括内部模板及 path 等信息
-     * @return {string} 返回解析后的字符串
+     * @param {string} env 当前的环境变量名
+     * @param {Array.<string>} args 传递的参数列表
+     * @return {Object} 返回 block helper 执行的结果
      */
     xtmpl.registerBlockHelper('with', function helperWith(env, args) {
         return {
@@ -492,7 +494,7 @@
      * @param {array.<string>} args 传递给当前helper的参数列表
      * @return {Object} 返回 block helper 执行的结果
      */
-    xtmpl.registerBlockHelper('forin', function helperFor(env, args) {
+    xtmpl.registerBlockHelper('forin', function helperForin(env, args) {
         var data = {
             env: '$value',
             variable: [env + '.' + args[0]],
