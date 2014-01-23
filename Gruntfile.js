@@ -57,7 +57,7 @@ module.exports = function(grunt) {
             }
         },
         jscs: {
-            src: 'src/xtmpl.js',
+            src: '<%= watch.xtmpl.files %>',
             options: {
                 config: '.jscs.json'
             }

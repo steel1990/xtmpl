@@ -195,7 +195,6 @@
         });
     })(xtmpl.compile);
 
-
     // test registerInlineHelper
     (function (xtmpl) {
         module('xtmpl.registerInlineHelper');
@@ -230,7 +229,7 @@
                 xtmpl.config('blockHelperFlag', '#');
             }
         });
-        
+
         test('change syntax', function () {
             equal(xtmpl.compile('{@this@}')('<span>'), '<span>');
             equal(xtmpl.compile('if{@%if a@}xxx{@/if@}')({ a: 1 }), 'ifxxx');
@@ -261,7 +260,7 @@
                 });
             }
         });
-        
+
         test('change syntax', function () {
             equal(xtmpl.compile('{@this@}')('<span>'), '<span>');
             equal(xtmpl.compile('if{@%if a@}xxx{@/if@}')({ a: 1 }), 'ifxxx');
