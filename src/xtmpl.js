@@ -118,8 +118,7 @@
     xtmpl.config = function (key, value) {
         if (typeof key === 'string') {
             _config[key] = value;
-        }
-        else {
+        } else {
             for (var k in key) {
                 _config[k] = key[k];
             }
@@ -188,8 +187,7 @@
                 if (varname.indexOf('/') === 0) {
                     // 表示访问顶级环境（根目录）
                     varname = envStack[0] + '.' + varname.slice(1);
-                }
-                else {
+                } else {
                     // 表示访问 n 次上一级(../../)
                     varname = varname.replace(/^((?:\.\.\/)+)/, pathReplacer);
                 }
@@ -264,8 +262,7 @@
             var p = param[i];
             if ('this' === p) {
                 param[i] = env;
-            }
-            else if (!paramReg.test(p) && /^[$\w_]+$/.test(p)) {
+            } else if (!paramReg.test(p) && /^[$\w_]+$/.test(p)) {
                 // p 为变量名
                 data.variable.push(env + '.' + p);
             }
@@ -291,13 +288,11 @@
 
         if (code.indexOf(_config.blockHelperFlag) === 0) {
             data = xtmpl._resolveBlockHelperCode(code, env);
-        }
-        else if (code.indexOf('/') === 0 && _blockHelper[code.slice(1)]) {
+        } else if (code.indexOf('/') === 0 && _blockHelper[code.slice(1)]) {
             // block helper end
             data.env = '..';
             data.str = '}})();\n';
-        }
-        else {
+        } else {
             var isEscape = true;
             if (code.indexOf('=') === 0) {
                 code = code.slice(1);
@@ -308,16 +303,14 @@
                 // insert param
                 if (param[0] === 'this') {
                     param[0] = env;
-                }
-                else if (param[0].indexOf('$') !== 0) {
+                } else if (param[0].indexOf('$') !== 0) {
                     data.variable.push(env + '.' + param[0]);
                 }
                 data.str = xtmpl._concatParam(
                     param[0].replace(/^[.\/]*/g, ''),
                     isEscape
                 );
-            }
-            else {
+            } else {
                 data = xtmpl._resolveInlineHelperCode(code, env, isEscape);
             }
         }
@@ -370,8 +363,7 @@
             if (data.env === '..') {
                 envStack.pop();
                 variableStack.pop();
-            }
-            else if (data.env) {
+            } else if (data.env) {
                 envStack.push(data.env);
                 variableStack.push({});
             }
@@ -564,10 +556,9 @@
     if ('object' === typeof module && 'object' === typeof module.exports) {
         // node.js 环境
         module.exports = xtmpl;
-    }
-    else if ('function' === typeof define && define.amd) {
+    } else if ('function' === typeof define && define.amd) {
         // require.js 等环境
-        define('xtmpl', [], function () {
+        define(function () {
             return xtmpl;
         });
     }

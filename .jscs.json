@@ -1,6 +1,7 @@
 {
     "requireCurlyBraces": ["if", "else", "for", "while", "do", "try", "catch"],
     "requireSpaceAfterKeywords": ["if", "else", "for", "while", "do", "switch", "return", "try", "catch"],
+    "requireSpaceAfterKeywords": ["if", "else", "for", "while", "do", "switch", "return", "try", "catch"],
     "disallowLeftStickedOperators": ["?", "+", "-", "/", "*", "=", "==", "===", "!=", "!==", ">", ">=", "<", "<="],
     "disallowRightStickedOperators": ["?", "+", "/", "*", ":", "=", "==", "===", "!=", "!==", ">", ">=", "<", "<="],
     "requireSpaceBeforeBinaryOperators": ["+", "-", "/", "*", "=", "==", "===", "!=", "!=="],
@@ -13,12 +14,13 @@
     "validateQuoteMarks": "'",
     "validateIndentation": 4,
     "disallowTrailingWhitespace": true,
-    "disallowMultipleLineBreaks": true,
+    "requireCommaBeforeLineBreak": true,
+    "requireOperatorBeforeLineBreak": ["?", "+", "-", "/", "*", "=", "==", "===", "!=", "!==", ">", ">=", "<", "<=", "&&", "||"],
     "maximumLineLength": 80,
     "requireCapitalizedConstructors": true,
     "requireDotNotation": true,
     "requireCamelCaseOrUpperCaseIdentifiers": true,
-    "requireKeywordsOnNewLine": ["else", "catch", "while"],
+    "requireKeywordsOnNewLine": ["catch", "finally", "while"],
     "validateJSDoc": {
         "checkParamNames": true,
         "requireParamTypes": true,
