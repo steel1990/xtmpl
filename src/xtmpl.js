@@ -338,6 +338,14 @@
             );
         }
 
+        // 如果 tmplStr 为元素 id 的话，获取其内容作为模板内容
+        if (!/[^\w-]/.test(tmplStr) && global.document) {
+            var ele = global.document.getElementById(tmplStr);
+            if (ele) {
+                tmplStr = ele.value || ele.innerHTML;
+            }
+        }
+
         // 假设为 abcd{{e}}fg{{h}}
         tmplStr = util.trim(tmplStr);
 
