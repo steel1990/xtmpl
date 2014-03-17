@@ -121,7 +121,8 @@ module.exports = function(grunt) {
      */
     grunt.registerTask('default', ['watch']);
     grunt.registerTask('client', ['jshint', 'jscs', 'uglify', 'qunit']);
-    grunt.registerTask('build', ['client', 'connect', 'saucelabs-qunit']);
+    // grunt.registerTask('build', ['client', 'connect', 'saucelabs-qunit']);
+    grunt.registerTask('build', ['client']);
 
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-uglify');
