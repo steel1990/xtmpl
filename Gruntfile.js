@@ -4,6 +4,23 @@
  */
 
 module.exports = function(grunt) {
+    var browsers = [
+        {
+            browserName: 'firefox',
+            version: '19',
+            platform: 'XP'
+        }, {
+            browserName: 'googlechrome',
+            platform: 'XP'
+        }, {
+            browserName: 'googlechrome',
+            platform: 'linux'
+        }, {
+            browserName: 'internet explorer',
+            platform: 'WIN8',
+            version: '10'
+        }
+    ];
     grunt.initConfig({
         watch: {
             xtmpl: {
@@ -37,7 +54,8 @@ module.exports = function(grunt) {
                 evil: true,
                 globals: {
                     module: true,
-                    define: true
+                    define: true,
+                    process: true
                 }
             },
             xtmpl: ['src/xtmpl.js', 'Gruntfile.js'],
@@ -74,6 +92,27 @@ module.exports = function(grunt) {
         },
         qunit: {
             xtmpl: ['test/runner.html']
+        },
+        connect: {
+            server: {
+                options: {
+                    base: '',
+                    port: 9999
+                }
+            }
+        },
+        'saucelabs-qunit': {
+            all: {
+                options: {
+                    urls: ['http://127.0.0.1:9999/test/runner.html'],
+                    tunnelTimeout: 5,
+                    build: process.env.TRAVIS_JOB_ID,
+                    concurrency: 3,
+                    browsers: browsers,
+                    testname: 'qunit tests',
+                    tags: ['master']
+                }
+            }
         }
     });
 
@@ -81,11 +120,14 @@ module.exports = function(grunt) {
      * 注册默认任务为 watch
      */
     grunt.registerTask('default', ['watch']);
-    grunt.registerTask('build', ['jshint', 'jscs', 'uglify', 'qunit']);
+    grunt.registerTask('client', ['jshint', 'jscs', 'uglify', 'qunit']);
+    grunt.registerTask('build', ['client', 'connect', 'saucelabs-qunit']);
 
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-qunit');
     grunt.loadNpmTasks('grunt-jscs-checker');
+    grunt.loadNpmTasks('grunt-saucelabs');
+    grunt.loadNpmTasks('grunt-contrib-connect');
 };
