@@ -156,6 +156,7 @@
             .replace(/\\/g, '\\\\')
             .replace(/"/g, '\\"')
             .replace(/\t/g, '\\t')
+            .replace(/\r/g, '\\r')
             .replace(/\n/g, '\\n');
         return _config.resultVarName + ' += "' + str + '";\n';
     };
