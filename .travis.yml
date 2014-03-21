@@ -1,7 +1,0 @@
-language: node_js
-node_js:
-  - 0.8
-env:
-  global:
-    - SAUCE_USERNAME: steel1990
-    - SAUCE_ACCESS_KEY: d7b2be1a-da4f-4d3e-9771-760820c9be87
