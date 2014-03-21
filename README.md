@@ -4,6 +4,8 @@ xtmpl
 
 xtmpl 是一个简单的js模板引擎
 
+demo: [http://steel1990.github.io/xtmpl](http://steel1990.github.io/xtmpl)
+
 ## 模板语法
 ### 简单插入
 
