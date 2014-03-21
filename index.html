@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>xtmpl demo</title>
+    <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+    <div id="box">
+        <header class="header">
+            <div id="panels">
+                <a data-name="json" class="button active" href="javascript:void(0);">JSON</a>
+                <a data-name="tpl" class="button active" href="javascript:void(0);">TPL</a>
+                <a data-name="preview" class="button active" href="javascript:void(0);">PREVIEW</a>
+            </div>
+        </header>
+        <section class="container">
+            <div class="json">
+                <header>
+                    <span>JSON</span>
+                </header>
+                <pre id="json-input"></pre>
+            </div>
+            <div class="tpl">
+                <header>
+                    <span>TPL</span>
+                </header>
+                <pre id="tpl-input"></pre>
+            </div>
+            <div class="preview">
+                <header>
+                    <span>PREVIEW</span>
+                    <select name="preview-type" id="preview-type">
+                        <option value="view">VIEW</option>
+                        <option value="html">RAW</option>
+                    </select>
+                </header>
+                <iframe src="about:blank" id="preview-iframe" frameborder="0"></iframe>
+            </div>
+        </section>
+    </div>
+
+    <script src="js/lib/require.js" data-main="js/main.js"></script>
+</body>
+</html>
