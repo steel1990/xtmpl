@@ -29,6 +29,8 @@
             {{/with}}
             </li>
 
+            xxx\d: {{list.0}}
+
             {{#for list}}
                 <li>{{$key}}:{{$value}}</li>
             {{/for}}
@@ -39,7 +41,7 @@
         </ul>
         {{tit}}
     </script>
-    <script src="../src/xtmpl.min.js"></script>
+    <script src="../src/xtmpl.js"></script>
     <script>
         var $ = function(id){
             return document.getElementById(id);

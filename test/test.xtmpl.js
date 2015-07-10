@@ -156,6 +156,10 @@
             equal(compile('if{{#if false}}xxx{{/if}}')(data), 'if');
             equal(compile('if{{#if this}}xxx{{/if}}')(1), 'ifxxx');
             equal(compile('if{{#if this}}xxx{{/if}}')(0), 'if');
+            equal(compile('if{{#if 2 > 1}}{{this}}{{/if}}')('x'), 'ifx');
+            equal(compile('if{{#if 2 < 1}}{{this}}{{/if}}')('x'), 'if');
+            equal(compile('if{{#if this > 1}}{{this}}{{/if}}')(2), 'if2');
+            equal(compile('if{{#if a > b}}{{a}}{{/if}}')({a: 2, b: 1}), 'if2');
         });
 
         test('compile with', function () {

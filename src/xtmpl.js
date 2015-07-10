@@ -137,7 +137,7 @@
         if (_config.escapeHtml && isEscape) {
             str += '$escape(';
         }
-        str += name;
+        str += name.replace(/\.\$_(\d+(?:\.|$))/, '[$1]');
         if (_config.escapeHtml && isEscape) {
             str += ')';
         }
@@ -195,7 +195,8 @@
             }
             var arr = varname.split('.');
             arr[1] = arr[1].split('.')[0];
-            str += 'var ' + arr[1] + ' = ' + arr[0] + '["' + arr[1] + '"];\n';
+            str += 'var ' + arr[1] + ' = ';
+            str += arr[0] + '["' + arr[1].replace(/^\$_(\d+)$/, '$1') + '"];\n';
         }
         return str;
     };
@@ -301,11 +302,17 @@
             }
             var param = util.trim(code).split(/\s+/);
             if (param.length === 1) {
+                param[0] = param[0].replace(/^this\./, '');
                 // insert param
                 if (param[0] === 'this') {
                     param[0] = env;
                 } else if (param[0].indexOf('$') !== 0) {
+                    // 将其中的纯数字替换成 $_ 数字，否则将会解析出错，出现 var 0 = xx; 这种
+                    param[0] = param[0].replace(/(\.|^)(\d+)(\.|$)/, '$1$_$2$3');
                     data.variable.push(env + '.' + param[0]);
+                } else {
+                    // 其中的 .num 替换为 [num]
+                    param[0] = param[0].replace(/(\.|^)(\d+)(\.|$)/, '[$2]$3');
                 }
                 data.str = xtmpl._concatParam(
                     param[0].replace(/^[.\/]*/g, ''),

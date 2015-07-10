@@ -74,12 +74,12 @@ module.exports = function(grunt) {
                 src: ['test/test.xtmpl.js']
             }
         },
-        jscs: {
-            src: '<%= watch.xtmpl.files %>',
-            options: {
-                config: '.jscs.json'
-            }
-        },
+        // jscs: {
+        //     src: '<%= watch.xtmpl.files %>',
+        //     options: {
+        //         config: '.jscs.json'
+        //     }
+        // },
         uglify: {
             options: {
                 beautify: false
@@ -120,7 +120,7 @@ module.exports = function(grunt) {
      * 注册默认任务为 watch
      */
     grunt.registerTask('default', ['watch']);
-    grunt.registerTask('client', ['jshint', 'jscs', 'uglify', 'qunit']);
+    grunt.registerTask('client', ['jshint', 'uglify', 'qunit']);
     // grunt.registerTask('build', ['client', 'connect', 'saucelabs-qunit']);
     grunt.registerTask('build', ['client']);
 
@@ -128,7 +128,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-qunit');
-    grunt.loadNpmTasks('grunt-jscs-checker');
+    // grunt.loadNpmTasks('grunt-jscs-checker');
     grunt.loadNpmTasks('grunt-saucelabs');
     grunt.loadNpmTasks('grunt-contrib-connect');
 };
