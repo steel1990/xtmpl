@@ -39,6 +39,9 @@
          */
         trim: function (str) {
             return (str + '').replace(/^\s*/, '').replace(/\s*$/, '');
+        },
+        convertDotNumberToBracket: function (str) {
+            return (str || '').replace(/\.(?:\$_)?(\d+(?:\.|$))/, '[$1]');
         }
     };
 
@@ -137,7 +140,7 @@
         if (_config.escapeHtml && isEscape) {
             str += '$escape(';
         }
-        str += name.replace(/\.\$_(\d+(?:\.|$))/, '[$1]');
+        str += util.convertDotNumberToBracket(name);
         if (_config.escapeHtml && isEscape) {
             str += ')';
         }
@@ -231,7 +234,11 @@
         var d = helperfn.call(null, env, param.slice(1));
         [].push.apply(data.variable, d.variable);
         data.env = d.env;
-        data.str = '(function () {\n' + d.str;
+        if (!d.noFunction) {
+            data.str = '(function () {\n' + d.str;
+        } else {
+            data.str = d.str;
+        }
         return data;
     };
 
@@ -456,12 +463,22 @@
             if (!/^['"]|^[\d.]$|^\W|true|false/.test(arg)) {
                 data.variable.push(env + '.' + arg);
             }
+            args[i] = xtmpl._util.convertDotNumberToBracket(arg);
             if (isNegate) {
                 args[i] = '!' + arg;
             }
         }
         data.str = 'if (' + args.join('') + ') {\n';
         return data;
+    });
+
+    xtmpl.registerBlockHelper('else', function handlerElse(env, args) {
+        return {
+            noFunction: true,
+            env: args[0],
+            variable: [],
+            str: '} else {\n'
+        };
     });
 
     /**
