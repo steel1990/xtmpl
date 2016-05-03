@@ -41,7 +41,7 @@
             return (str + '').replace(/^\s*/, '').replace(/\s*$/, '');
         },
         convertDotNumberToBracket: function (str) {
-            return (str || '').replace(/\.(?:\$_)?(\d+(?:\.|$))/, '[$1]');
+            return (str || '').replace(/\.(?:\$_)?(\d+)(\.|$)/g, '[$1]$2');
         }
     };
 
@@ -197,9 +197,11 @@
                 }
             }
             var arr = varname.split('.');
-            arr[1] = arr[1].split('.')[0];
-            str += 'var ' + arr[1] + ' = ';
-            str += arr[0] + '["' + arr[1].replace(/^\$_(\d+)$/, '$1') + '"];\n';
+            if (!curVariables[arr[1]]) {
+                curVariables[arr[1]] = 1;
+                str += 'var ' + arr[1] + ' = ';
+                str += arr[0] + '["' + arr[1].replace(/^\$_(\d+)$/, '$1') + '"];\n';
+            }
         }
         return str;
     };
@@ -274,11 +276,32 @@
             } else if (!paramReg.test(p) && /^[$\w_]+$/.test(p)) {
                 // p 为变量名
                 data.variable.push(env + '.' + p);
+            } else {
+                param[i] = xtmpl._resolveParam(p, env, data);
             }
         }
         data.str = helperName + '(' + param.join(',') + ')';
         data.str = xtmpl._concatParam(data.str, isEscape);
         return data;
+    };
+
+    xtmpl._resolveParam = function (param, env, data) {
+        if (/^(?:(['"])[\S]*\1|[\d.]+|true|false)$/.test(param)) {
+            return param;
+        }
+        param = param.replace(/^this\./, '');
+        // insert param
+        if (param === 'this') {
+            param = env;
+        } else if (param.indexOf('$') !== 0) {
+            // 将其中的纯数字替换成 $_ 数字，否则将会解析出错，出现 var 0 = xx; 这种
+            param = param.replace(/(\.|^)(\d+)(\.|$)/, '$1$_$2$3');
+            data.variable.push(env + '.' + param);
+        } else {
+            // 其中的 .num 替换为 [num]
+            param = param.replace(/(\.|^)(\d+)(\.|$)/, '[$2]$3');
+        }
+        return param.replace(/^[.\/]*/g, '');
     };
 
     /**
@@ -296,6 +319,10 @@
         };
 
         if (code.indexOf(_config.blockHelperFlag) === 0) {
+            var isInlineBlock = code.indexOf('/') === code.length - 1;
+            if (isInlineBlock) {
+                code = code.slice(0, -1);
+            }
             data = xtmpl._resolveBlockHelperCode(code, env);
         } else if (code.indexOf('/') === 0 && _blockHelper[code.slice(1)]) {
             // block helper end
@@ -309,20 +336,8 @@
             }
             var param = util.trim(code).split(/\s+/);
             if (param.length === 1) {
-                param[0] = param[0].replace(/^this\./, '');
-                // insert param
-                if (param[0] === 'this') {
-                    param[0] = env;
-                } else if (param[0].indexOf('$') !== 0) {
-                    // 将其中的纯数字替换成 $_ 数字，否则将会解析出错，出现 var 0 = xx; 这种
-                    param[0] = param[0].replace(/(\.|^)(\d+)(\.|$)/, '$1$_$2$3');
-                    data.variable.push(env + '.' + param[0]);
-                } else {
-                    // 其中的 .num 替换为 [num]
-                    param[0] = param[0].replace(/(\.|^)(\d+)(\.|$)/, '[$2]$3');
-                }
                 data.str = xtmpl._concatParam(
-                    param[0].replace(/^[.\/]*/g, ''),
+                    xtmpl._resolveParam(param[0], env, data),
                     isEscape
                 );
             } else {
